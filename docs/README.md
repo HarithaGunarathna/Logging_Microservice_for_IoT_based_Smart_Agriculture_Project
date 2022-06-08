@@ -34,7 +34,7 @@ In this project we are aiming to design a data store for a logging service along
 ## Technology Stack
 
 ### Database 
-![mongoatlascopy](./images/mongoatlascopy.png)
+![mongoatlasdatabase](./images/mongoatlasdatabase.png)
 
 ---
 
