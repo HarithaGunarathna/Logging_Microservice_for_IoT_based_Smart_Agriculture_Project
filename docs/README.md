@@ -38,7 +38,6 @@ In this project we are aiming to design a data store for a logging service along
 
 #### REST API 
 ![spring](./images/spring.png)
----
 
 ## Links
 
