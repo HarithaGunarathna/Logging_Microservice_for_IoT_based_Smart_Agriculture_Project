@@ -33,9 +33,11 @@ In this project we are aiming to design a data store for a logging service along
 
 ## Technology Stack
 
-### Database 
+#### Database 
 ![mongoatlasdatabase](./images/mongoatlasdatabase.png)
 
+#### REST API 
+![spring](./images/spring.png)
 ---
 
 ## Links
