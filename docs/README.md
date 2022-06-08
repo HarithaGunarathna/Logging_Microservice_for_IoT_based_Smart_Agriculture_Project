@@ -33,8 +33,8 @@ In this project we are aiming to design a data store for a logging service along
 
 ## Technology Stack
 
-Database - MongoDB Atlas
-REST API - SpringBoot
+Database 
+![mongoatlascopy](./images/mongoatlascopy.png)
 
 ---
 
