@@ -32,9 +32,8 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
- description of the real world problem and solution, impact
+In this project we are aiming to design a data store for a logging service along with associated generic services using a suitable programming language for IIoT solutions.By this the loggers will be able to discover anomalies in operations via audit analysis using different ML-based techniques. 
 
-## Other Sub Topics
 
 .....
 
