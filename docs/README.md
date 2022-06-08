@@ -22,7 +22,7 @@ title:
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Other Sub Topics](#other-sub-topics)
+2. [Technology Stack](#technology_stack)
 3. [Links](#links)
 
 ---
@@ -31,8 +31,12 @@ title:
 
 In this project we are aiming to design a data store for a logging service along with associated generic services using a suitable programming language for IIoT solutions.By this the loggers will be able to discover anomalies in operations via audit analysis using different ML-based techniques. 
 
+## Technology Stack
 
-.....
+Database - MongoDB Atlas
+REST API - SpringBoot
+
+---
 
 ## Links
 
