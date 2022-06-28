@@ -2,18 +2,15 @@ package com.example.co227_project.filters;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.TeeOutputStream;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import javax.servlet.http.*;
+import java.io.*;
 
 @Component
 @Slf4j
@@ -23,19 +20,23 @@ public class RequestResponseLoggers implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        MyCustomHttpRequestWrapper  requestWrapper = new MyCustomHttpRequestWrapper ((HttpServletRequest) servletRequest);
 
-        log.info("Request URI: {}",httpServletRequest.getRequestURI());
-        log.info("Request Method: {}",httpServletRequest.getMethod());
-        log.info("Request Body: {}", new String(IOUtils.toByteArray(httpServletRequest.getInputStream())));
-        filterChain.doFilter(servletRequest , servletResponse);
+        log.info("Request URI: {}",requestWrapper.getRequestURI());
+        log.info("Request Method: {}",requestWrapper.getMethod());
+        log.info("Request Body: {}", new String(requestWrapper.getByteArray()));
 
-        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse ;
+        MyCustomHttpResponseWrapper responseWrapper = new MyCustomHttpResponseWrapper((HttpServletResponse)servletResponse);
+
+        filterChain.doFilter(requestWrapper , responseWrapper);
+
+        log.info("Response status - {}", responseWrapper.getStatus());
+        log.info("Response Body - {}", new String(responseWrapper.getBaos().toByteArray()));
     }
 
     private class MyCustomHttpRequestWrapper extends HttpServletRequestWrapper {
 
-        byte[] byteArray;
+        private byte[] byteArray;
         public MyCustomHttpRequestWrapper(HttpServletRequest request) {
 
             super(request);
@@ -51,6 +52,36 @@ public class RequestResponseLoggers implements Filter {
 
             return new MyDelegatingServletInputStream(new ByteArrayInputStream(byteArray));
 
+        }
+
+        public byte[] getByteArray() {
+            return byteArray;
+        }
+    }
+
+    private class MyCustomHttpResponseWrapper extends HttpServletResponseWrapper {
+
+        private ByteArrayOutputStream baos =new ByteArrayOutputStream();
+
+        private PrintStream printStream = new PrintStream(baos);
+
+        public ByteArrayOutputStream getBaos() {
+            return baos;
+        }
+
+        public MyCustomHttpResponseWrapper(HttpServletResponse response) {
+            super(response);
+        }
+
+        @Override
+        public ServletOutputStream getOutputStream() throws IOException {
+            return new MyDelegatingServletOutputStream(new TeeOutputStream(super.getOutputStream(),printStream)) ;
+
+        }
+
+        @Override
+        public PrintWriter getWriter() throws IOException {
+            return new PrintWriter(new TeeOutputStream(super.getOutputStream(),printStream));
         }
     }
 }
