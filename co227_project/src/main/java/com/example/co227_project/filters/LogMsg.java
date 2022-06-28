@@ -1,11 +1,14 @@
 package com.example.co227_project.filters;
 
+import lombok.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("logmsg")
 public class LogMsg {
     @Id
+    @Generated
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private String id ;
     private String requestURI ;
     private String requestMethod ;

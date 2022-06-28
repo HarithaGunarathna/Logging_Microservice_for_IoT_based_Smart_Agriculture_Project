@@ -17,21 +17,45 @@ import java.io.*;
 @Order(1)
 public class RequestResponseLoggers implements Filter {
 
+    private String requestURI;
+    private String requestMethod;
+    private String requestBody;
+    private int responseStatus;
+    private String responesBody;
+
+    LogMsgRepository logMsgRepository;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         MyCustomHttpRequestWrapper  requestWrapper = new MyCustomHttpRequestWrapper ((HttpServletRequest) servletRequest);
 
-        log.info("Request URI: {}",requestWrapper.getRequestURI());
-        log.info("Request Method: {}",requestWrapper.getMethod());
-        log.info("Request Body: {}", new String(requestWrapper.getByteArray()));
+        requestURI = requestWrapper.getRequestURI();
+        requestMethod = requestWrapper.getMethod();
+        requestBody = new String(requestWrapper.getByteArray()) ;
+
+        log.info("Request URI: {}",requestURI);
+        log.info("Request Method: {}",requestMethod);
+        log.info("Request Body: {}", requestBody);
 
         MyCustomHttpResponseWrapper responseWrapper = new MyCustomHttpResponseWrapper((HttpServletResponse)servletResponse);
 
         filterChain.doFilter(requestWrapper , responseWrapper);
 
-        log.info("Response status - {}", responseWrapper.getStatus());
-        log.info("Response Body - {}", new String(responseWrapper.getBaos().toByteArray()));
+        responseStatus = responseWrapper.getStatus();
+        responesBody =  new String(responseWrapper.getBaos().toByteArray());
+
+        log.info("Response status - {}", responseStatus);
+        log.info("Response Body - {}", responesBody);
+
+        LogMsg logMsg = new LogMsg();
+        logMsg.setRequestBody(requestBody);
+        logMsg.setRequestMethod(requestMethod);
+        logMsg.setRequestURI(requestURI);
+        logMsg.setResponseBody(responesBody);
+        logMsg.setResponseStatus(String.valueOf(responseStatus));
+
+        this.logMsgRepository.save(logMsg);
     }
 
     private class MyCustomHttpRequestWrapper extends HttpServletRequestWrapper {
