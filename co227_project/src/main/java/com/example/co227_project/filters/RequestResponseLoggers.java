@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.TeeOutputStream;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -23,7 +21,11 @@ public class RequestResponseLoggers implements Filter {
     private int responseStatus;
     private String responesBody;
 
-    LogMsgRepository logMsgRepository;
+    private final LogMsgRepository logMsgRepository;
+
+    public RequestResponseLoggers(LogMsgRepository logMsgRepository) {
+        this.logMsgRepository = logMsgRepository;
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
