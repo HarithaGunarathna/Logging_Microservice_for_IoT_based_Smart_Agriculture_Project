@@ -14,12 +14,15 @@ public class User {
 
     private String Password;
 
+    private String Serverity;
+
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(String username, String password , String serverity) {
         Username = username;
         Password = password;
+        Serverity = serverity;
     }
 
     public String getId() {
@@ -44,5 +47,13 @@ public class User {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getServerity() {
+        return Serverity;
+    }
+
+    public void setServerity(String serverity) {
+        Serverity = serverity;
     }
 }

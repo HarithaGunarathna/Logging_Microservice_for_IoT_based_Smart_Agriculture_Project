@@ -32,10 +32,29 @@ public class AuditRequest {
     @JsonProperty("Remarks")
     private String remarks;
 
+
+
+    @JsonProperty("RequestURI")
+    private String requestURI;
+
+    @JsonProperty("RequestMethod")
+    private String requestMethod;
+
+    @JsonProperty("RequestBody")
+    private String requestBody;
+
+    @JsonProperty("ResponseStatus")
+    private String responseStatus;
+
+    @JsonProperty("ResponseBody")
+    private String responseBody;
+
+
+
     public AuditRequest() {
     }
 
-    public AuditRequest(String clientTime, String server_time, String ip, String type, String serverity, String keyword, String description, String generated_from, String remarks) {
+    public AuditRequest(String clientTime, String server_time, String ip, String type, String serverity, String keyword, String description, String generated_from, String remarks, String requestURI, String requestMethod, String requestBody, String responseStatus, String responseBody) {
         this.clientTime = clientTime;
         this.server_time = server_time;
         this.ip = ip;
@@ -45,6 +64,11 @@ public class AuditRequest {
         this.description = description;
         this.generated_from = generated_from;
         this.remarks = remarks;
+        this.requestURI = requestURI;
+        this.requestMethod = requestMethod;
+        this.requestBody = requestBody;
+        this.responseStatus = responseStatus;
+        this.responseBody = responseBody;
     }
 
     public String getClientTime() {
@@ -117,5 +141,45 @@ public class AuditRequest {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getRequestURI() {
+        return requestURI;
+    }
+
+    public void setRequestURI(String requestURI) {
+        this.requestURI = requestURI;
+    }
+
+    public String getRequestMethod() {
+        return requestMethod;
+    }
+
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
+    }
+
+    public String getRequestBody() {
+        return requestBody;
+    }
+
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public String getResponseStatus() {
+        return responseStatus;
+    }
+
+    public void setResponseStatus(String responseStatus) {
+        this.responseStatus = responseStatus;
+    }
+
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
     }
 }
