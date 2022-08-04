@@ -30,6 +30,8 @@ public class AuditController {
     public ResponseEntity<Audit> createAuditData(@RequestBody AuditRequest auditRequest){
 
         Audit audit = new Audit();
+
+
         audit.setClientTime(auditRequest.getClientTime());
         audit.setServer_time(auditRequest.getServer_time());
         audit.setIp(auditRequest.getIp());
@@ -39,6 +41,12 @@ public class AuditController {
         audit.setDescription(auditRequest.getDescription());
         audit.setGenerated_from(auditRequest.getGenerated_from());
         audit.setRemarks(auditRequest.getRemarks());
+
+        audit.setRequestURI(auditRequest.getRequestURI());
+        audit.setRequestBody(auditRequest.getRequestBody());
+        audit.setRequestMethod(auditRequest.getRequestMethod());
+        audit.setResponseBody(auditRequest.getResponseBody());
+        audit.setResponseStatus(auditRequest.getResponseStatus());
 
 
         return ResponseEntity.status(201).body(this.auditRepository.save(audit));

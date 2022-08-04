@@ -10,10 +10,14 @@ public class UserRequest {
     @JsonProperty("Password")
     private String Password;
 
+    @JsonProperty("Serverity")
+    private String Serverity;
+
     public UserRequest() {
     }
 
-    public UserRequest(String userName, String password) {
+    public UserRequest(String userName, String password , String serverity) {
+        Serverity = serverity;
         UserName = userName;
         Password = password;
     }
@@ -32,5 +36,13 @@ public class UserRequest {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getServerity() {
+        return Serverity;
+    }
+
+    public void setServerity(String serverity) {
+        Serverity = serverity;
     }
 }
