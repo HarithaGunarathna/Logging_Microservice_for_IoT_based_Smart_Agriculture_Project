@@ -12,10 +12,7 @@ title:
 # Logging Microservice for IoT based Smart Agriculture Project
 
 ---
-
-This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/)
-
-![Sample Image](./images/sample.png)
+![SA](./images/SA.png)
 
 
 ## Team
@@ -25,18 +22,22 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Other Sub Topics](#other-sub-topics)
+2. [Technology Stack](#technology_stack)
 3. [Links](#links)
 
 ---
 
 ## Introduction
 
- description of the real world problem and solution, impact
+In this project we are aiming to design a data store for a logging service along with associated generic services using a suitable programming language for IIoT solutions.By this the loggers will be able to discover anomalies in operations via audit analysis using different ML-based techniques. 
 
-## Other Sub Topics
+## Technology Stack
 
-.....
+#### Database 
+![mongoatlasdatabase](./images/mongoatlasdatabase.png)
+
+#### REST API 
+![spring](./images/spring.png)
 
 ## Links
 
