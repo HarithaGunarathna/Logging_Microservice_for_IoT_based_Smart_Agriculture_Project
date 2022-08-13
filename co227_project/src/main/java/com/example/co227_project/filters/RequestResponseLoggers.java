@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 @Slf4j
@@ -24,7 +26,7 @@ public class RequestResponseLoggers implements Filter {
 
 
     private String clientTime;
-    private String server_time;
+    private String server_time ;
     private String ip;
     private String type;
     private String serverity = new String("");
@@ -32,7 +34,8 @@ public class RequestResponseLoggers implements Filter {
     private String description;
     private String generated_from;
     private String remarks;
-    private Object requestObject;
+
+
     //private String requestId;
 
     private final LogMsgRepository logMsgRepository;
@@ -60,19 +63,53 @@ public class RequestResponseLoggers implements Filter {
         responesBody =  new String(responseWrapper.getBaos().toByteArray());
 
 
-        String ans = new String();
+        String ans1 = new String();
+        String ans2 = new String();
+        String date = new String();
+        String month = new String();
+        String year = new String();
+        String hour = new String();
+        String minute = new String();
+        String second = new String();
         LogMsg logMsg = new LogMsg();
+
+        Date dateAndTime = new Date();
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        server_time = simpleDateFormat.format(dateAndTime);
 
         if(requestMethod.equals("POST")){
 
-            String[] lst = requestBody.split("[,\n] ",-2);
+            String[] lst = requestBody.split("[^\\w]+" );
+
             for(int i=0;i<lst.length;i++) {
-                if(lst[i].matches("\\s+\"Serverity\\W+\\w+\\W+")) {
-                    String[] zz= lst[i].split("[:}\\s+]",-1);
-                    ans = zz[6];
+                if(lst[i].equals("Serverity")) {
+                    ans1 = lst[i+1];
+                    break;
                 }
             }
-            serverity = ans.substring(1,ans.length() - 1);
+            serverity = ans1;
+
+            for(int i=0;i<lst.length;i++) {
+                if(lst[i].equals("Type")) {
+                    ans2 = lst[i+1];
+                    break;
+                }
+            }
+            type = ans2;
+
+            for(int i=0;i<lst.length;i++) {
+                if(lst[i].equals("ClientTime")) {
+                    date = lst[i+1];
+                    month = lst[i+2];
+                    year = lst[i+3];
+                    hour = lst[i+4];
+                    minute = lst[i+5];
+                    second = lst[i+6];
+
+                    break;
+                }
+            }
+            clientTime = date+"-"+month+"-"+year+" "+hour+":"+minute+":"+second;
 
 
             String info = new String("INFO");
@@ -87,6 +124,9 @@ public class RequestResponseLoggers implements Filter {
             if(serverity.equalsIgnoreCase(info)){
 
                 log.info("Serverity: {}",serverity);
+                log.info("ClientTime: {}",clientTime);
+                log.info("ServerTime: {}",server_time);
+                log.info("Type: {}",type);
 
                 log.info("Request URI: {}",requestURI);
                 log.info("Request Method: {}",requestMethod);
@@ -99,6 +139,9 @@ public class RequestResponseLoggers implements Filter {
 
             }else if (serverity.equalsIgnoreCase(error) || serverity.equalsIgnoreCase(fatal)){
                 log.error("Serverity: {}",serverity);
+                log.error("ClientTime: {}",clientTime);
+                log.error("ServerTime: {}",server_time);
+                log.error("Type: {}",type);
 
                 log.error("Request URI: {}",requestURI);
                 log.error("Request Method: {}",requestMethod);
@@ -111,6 +154,9 @@ public class RequestResponseLoggers implements Filter {
 
             }else if(serverity.equalsIgnoreCase(warn)){
                 log.warn("Serverity: {}",serverity);
+                log.warn("ClientTime: {}",clientTime);
+                log.warn("ServerTime: {}",server_time);
+                log.warn("Type: {}",type);
 
                 log.warn("Request URI: {}",requestURI);
                 log.warn("Request Method: {}",requestMethod);
@@ -123,6 +169,9 @@ public class RequestResponseLoggers implements Filter {
 
             }else if(serverity.equalsIgnoreCase(trace)){
                 log.trace("Serverity: {}",serverity);
+                log.trace("ClientTime: {}",clientTime);
+                log.trace("ServerTime: {}",server_time);
+                log.trace("Type: {}",type);
 
                 log.trace("Request URI: {}",requestURI);
                 log.trace("Request Method: {}",requestMethod);
@@ -135,6 +184,9 @@ public class RequestResponseLoggers implements Filter {
 
             }else if(serverity.equalsIgnoreCase(debug)){
                 log.debug("Serverity: {}",serverity);
+                log.debug("ClientTime: {}",clientTime);
+                log.debug("ServerTime: {}",server_time);
+                log.debug("Type: {}",type);
 
                 log.debug("Request URI: {}",requestURI);
                 log.debug("Request Method: {}",requestMethod);
@@ -147,6 +199,9 @@ public class RequestResponseLoggers implements Filter {
 
             }else {
                 log.warn("Serverity: {}",warn);
+                log.warn("ClientTime: {}",clientTime);
+                log.warn("ServerTime: {}",server_time);
+                log.warn("Type: {}",type);
 
                 log.warn("Request URI: {}",requestURI);
                 log.warn("Request Method: {}",requestMethod);
@@ -161,6 +216,8 @@ public class RequestResponseLoggers implements Filter {
         }else if(requestMethod.equals("GET")){
             serverity = "INFO" ;
             log.info("Serverity: {}",serverity);
+            log.info("Type: {}",new String("Getting Data Using HTTP GET Request"));
+            log.info("ServerTime: {}",server_time);
 
             log.info("Request URI: {}",requestURI);
             log.info("Request Method: {}",requestMethod);
@@ -179,6 +236,10 @@ public class RequestResponseLoggers implements Filter {
         logMsg.setResponseBody(responesBody);
         logMsg.setResponseStatus(String.valueOf(responseStatus));
         logMsg.setIp(ip);
+        logMsg.setType(type);
+        logMsg.setClientTime(clientTime);
+        logMsg.setServer_time(server_time);
+        logMsg.setServerity(serverity);
 
 
         this.logMsgRepository.save(logMsg);

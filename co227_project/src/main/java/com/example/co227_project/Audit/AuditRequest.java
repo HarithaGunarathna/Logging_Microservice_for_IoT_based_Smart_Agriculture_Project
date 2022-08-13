@@ -8,8 +8,8 @@ public class AuditRequest {
     @JsonProperty("ClientTime")
     private String clientTime;
 
-    @JsonProperty("ServerTime")
-    private String server_time;
+    //@JsonProperty("ServerTime")
+    //private String server_time;
 
     @JsonProperty("Ip")
     private String ip;
@@ -54,9 +54,9 @@ public class AuditRequest {
     public AuditRequest() {
     }
 
-    public AuditRequest(String clientTime, String server_time, String ip, String type, String serverity, String keyword, String description, String generated_from, String remarks, String requestURI, String requestMethod, String requestBody, String responseStatus, String responseBody) {
+    public AuditRequest(String clientTime, String ip, String type, String serverity, String keyword, String description, String generated_from, String remarks, String requestURI, String requestMethod, String requestBody, String responseStatus, String responseBody) {
         this.clientTime = clientTime;
-        this.server_time = server_time;
+      //  this.server_time = server_time;
         this.ip = ip;
         this.type = type;
         this.serverity = serverity;
@@ -79,13 +79,13 @@ public class AuditRequest {
         this.clientTime = clientTime;
     }
 
-    public String getServer_time() {
-        return server_time;
-    }
+   // public String getServer_time() {
+     //   return server_time;
+    //}
 
-    public void setServer_time(String server_time) {
-        this.server_time = server_time;
-    }
+    //public void setServer_time(String server_time) {
+      //  this.server_time = server_time;
+    //}
 
     public String getIp() {
         return ip;

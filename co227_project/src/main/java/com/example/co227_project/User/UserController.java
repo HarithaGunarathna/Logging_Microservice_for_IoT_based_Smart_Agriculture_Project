@@ -32,6 +32,7 @@ public class UserController {
         user.setUsername(userRequest.getUserName());
         user.setPassword(userRequest.getPassword());
         user.setServerity(userRequest.getServerity());
+        user.setType(userRequest.getType());
 
         return ResponseEntity.status(201).body(this.userRepository.save(user));
     }
