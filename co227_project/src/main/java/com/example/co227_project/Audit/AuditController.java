@@ -33,7 +33,7 @@ public class AuditController {
 
 
         audit.setClientTime(auditRequest.getClientTime());
-        audit.setServer_time(auditRequest.getServer_time());
+       // audit.setServer_time(auditRequest.getServer_time());
         audit.setIp(auditRequest.getIp());
         audit.setType(auditRequest.getType());
         audit.setServerity(auditRequest.getServerity());

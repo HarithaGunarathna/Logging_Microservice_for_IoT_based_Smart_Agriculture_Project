@@ -13,13 +13,17 @@ public class UserRequest {
     @JsonProperty("Serverity")
     private String Serverity;
 
+    @JsonProperty("Type")
+    private String Type ;
+
     public UserRequest() {
     }
 
-    public UserRequest(String userName, String password , String serverity) {
+    public UserRequest(String userName, String password , String serverity , String type) {
         Serverity = serverity;
         UserName = userName;
         Password = password;
+        Type =type;
     }
 
     public String getUserName() {
@@ -40,6 +44,14 @@ public class UserRequest {
 
     public String getServerity() {
         return Serverity;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 
     public void setServerity(String serverity) {

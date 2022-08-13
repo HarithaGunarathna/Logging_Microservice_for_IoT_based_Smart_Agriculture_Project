@@ -16,13 +16,16 @@ public class User {
 
     private String Serverity;
 
+    private String Type;
+
     public User() {
     }
 
-    public User(String username, String password , String serverity) {
+    public User(String username, String password , String serverity , String type) {
         Username = username;
         Password = password;
         Serverity = serverity;
+        Type = type;
     }
 
     public String getId() {
@@ -39,6 +42,14 @@ public class User {
 
     public void setUsername(String username) {
         Username = username;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 
     public String getPassword() {
